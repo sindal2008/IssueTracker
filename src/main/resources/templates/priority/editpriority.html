@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Priority status</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <form th:action="@{/priority/edit}" method="post" th:object="${priority}" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="priorityName">Priority name</label>
+            <input required="required" class="form-control" th:field="${priority.priorityName}"/>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" th:field="${priority.id}"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Add issue</title>
+    <script th:src="@{/js/categories.js}"></script>
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <form th:action="@{/issue/add}" method="post" th:object="${issue}" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="summary">Summary</label>
+            <input required="required" class="form-control"
+                   placeholder="add your summary here..." th:field="*{summary}" />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input required="required" class="form-control"
+                   placeholder="add your description here..." th:field="*{description}"/>
+        </div>
+
+        <div>
+            <label for="status">Status</label>
+            <select name="statusId">
+                <option
+                        th:each="status : ${allStatuses}" th:value="${status.id}" th:text="${status.statusName}"/>
+            </select>
+        </div>
+        <div>
+            <label for="type">Type</label>
+            <select name="typeId">
+                <option th:each="type : ${allTypes}" th:value="${type.id}" th:text="${type.typeName}"/>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="priority">Priority</label>
+            <select name="priorityId">
+                <option th:each="priority : ${allPriorities}" th:value="${priority.id}" th:text="${priority.priorityName}"/>
+            </select>
+        </div>
+        <div>
+            <label for="project">Project</label>
+            <select name="projectId">
+                <option th:each="project : ${allProjects}" th:value="${project.id}" th:text="${project.projectName}"/>
+            </select>
+        </div>
+        <div>
+            <label for="buildfound">Build found</label>
+            <select name="buildId">
+                <option th:each="build : ${allBuilds}" th:value="${build.id}" th:text="${build.buildNumb}"/>
+            </select>
+        </div>
+        <div>
+            <label for="assignee">Assignee</label>
+            <select name="assigneeUserId">
+                <option th:each="user : ${allUsers}" th:value="${user.id}" th:text="${user.lastName}"/>
+            </select>
+        </div>
+
+
+            <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+
+</div>
+</body>
+</html>

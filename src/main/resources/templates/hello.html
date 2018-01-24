@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        content="text/html;charset=ISO-8859-8"
+      layout:decorator="layout">
+>
+<head>
+    <title>Issue added</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="alert alert-success" role="alert">
+        <h2 th:text="|You are welcome, ${user.firstName} ${user.lastName}|"></h2>
+        <h3><a th:href="@{/}" title="Back" style="color: darkolivegreen">click to continue</a></h3>
+    </div>
+</div>
+</body>
+</html>

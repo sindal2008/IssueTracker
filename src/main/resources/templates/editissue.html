@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Edit issue</title>
+    <script th:src="@{/js/main.js}"></script>
+
+</head>
+<body>
+<div layout:fragment="content">
+
+    <form th:action="@{/issue/edit}" method="post" th:object="${issue}" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="summary">Summary</label>
+            <input required="required" class="form-control" th:field="${issue.summary}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input required="required" class="form-control" th:field="${issue.description}"/>
+        </div>
+
+        <div>
+        <tr><td><label for="createDate">Create Date: </label></td>
+            <td class="form-control" th:text="${issue.createDate}"></td>
+        </tr></div>
+
+        <div><tr><td><label for="userId">Created By: </label></td>
+            <td class="form-control" th:text="${issue.createdBy}"></td>
+        </tr></div>
+
+        <div><tr><td><label for="modifyDate">Modify Date: </label></td>
+            <td class="form-control" th:text="${issue.modifyDate}"></td>
+        </tr></div>
+
+        <div><tr><td><label for="modifiedBy">Modified By: </label></td>
+            <td class="form-control" th:text="${issue.modifiedBy}"></td>
+        </tr></div>
+
+        <div><tr><td><label for="id">ID of the issue: </label></td>
+            <td class="form-control" th:text="${issue.id}"></td>
+        </tr></div>
+
+        <div>
+            <label for="status">Status</label>
+            <select name="statusId">
+                <option th:selected="${issue.status.id == status.id}"
+                        th:each="status : ${allStatuses}" th:value="${status.id}"
+                        th:text="${status.statusName}"/>
+            </select>
+        </div>
+
+        <div>
+            <label for="type">Type</label>
+            <select name="typeId">
+                <option th:selected="${issue.type.id == type.id}"
+                        th:each="type : ${allTypes}"
+                        th:value="${type.id}"
+                        th:text="${type.typeName}"/>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="priority">Priority</label>
+            <select name="priorityId">
+                <option th:selected="${issue.priority.id == priority.id}"
+                        th:each="priority : ${allPriorities}"
+                        th:value="${priority.id}"
+                        th:text="${priority.priorityName}"/>
+            </select>
+        </div>
+
+        <div>
+            <label for="project">Project</label>
+            <select name="projectId">
+                <option th:selected="${issue.project.id == project.id}"
+                        th:each="project : ${allProjects}"
+                        th:value="${project.id}"
+                        th:text="${project.projectName}"/>
+            </select>
+        </div>
+        <div>
+            <label for="buildfound">Build found</label>
+            <select name="buildId">
+                <option th:selected="${issue.build.id == build.id}"
+                        th:each="build : ${allBuilds}"
+                        th:value="${build.id}"
+                        th:text="${build.buildNumb}"/>
+            </select>
+        </div>
+        <div>
+            <label for="assignee">Assignee</label>
+            <select name="assigneeUserId">
+                <option th:selected="${issue.assignee.id == user.id}"
+                        th:each="user : ${allUsers}"
+                        th:value="${user.id}"
+                        th:text="${user.lastName}"/>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" th:field="${issue.id}"/>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" th:field="${issue.createdBy}"/>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" th:field="${issue.modifiedBy}"/>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" th:field="${issue.createDate}"/>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" th:field="${issue.modifyDate}"/>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+        </button>
+    </form>
+
+
+    <th:block th:if="${!issue.comments.isEmpty()}">
+        <p><strong>Comments:</strong></p>
+        <th:block th:each="comment: ${issue.comments}">
+            <div class="well well-sm">
+                <p th:text="${comment.text}"></p>
+                <h6 th:text="|Added by ${comment.user.firstName} ${comment.user.lastName} ${comment.user.getRoles()}|"></h6>
+                <h6 th:text="|Add date ${comment.dateAdded}|"></h6>
+            </div>
+        </th:block>
+    </th:block>
+
+
+    <p><a href="#" th:onclick="|leaveComment(${issue.id})|" th:id="|comment-link-${issue.id}|">
+
+        <p>
+        <button type="submit" class="btn btn-success">
+            <span aria-hidden="true"></span> Add comment
+        </button>
+        </p>
+    </a></p>
+
+    <div class="hidden" th:id="|comment-${issue.id}|">
+        <textarea placeholder="Text" class="form-control" rows="3"></textarea>
+        <br/>
+        <p>
+            <button type="button" class="btn btn-success btn-sm" th:onclick="|sendComment(${issue.id})|">
+                Add
+            </button>
+            <button type="button" class="btn btn-warning btn-sm"
+                    th:onclick="|cancelComment(${issue.id})|">Cancel
+            </button>
+        </p>
+    </div>
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css"/>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <form class="form-signin" method="post" th:action="@{/login}">
+        <h2 class="form-signin-heading" th:text="#{login.title('')}"></h2>
+
+        <label for="inputUsername" class="sr-only" th:text="#{login.form.username}"></label>
+        <input name="username" type="text" id="inputUsername" class="form-control" th:placeholder="#{login.form.username}"/>
+
+        <label for="inputPassword" class="sr-only" th:text="#{login.form.password}"></label>
+        <input type="password" name="password" id="inputPassword" class="form-control" th:placeholder="#{login.form.password}"/>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.form.button}"></button>
+
+    </form>
+</div>
+
+</body>
+</html>

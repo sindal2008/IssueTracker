@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta name="base-url" id="baseUrl" th:content="@{/}"/>
+    <link rel="stylesheet" href="https://bootswatch.com/3/spacelab/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../static/css/main.css" type="text/css"/>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:src="@{/js/ws.js}"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a class="navbar-form navbar-left" th:href="@{/}"> <img th:src="@{/images/logo12.png}"/></a>
+        </div>
+
+        <div id="navbar" class="collapse navbar-collapse">
+
+            <ul class="nav navbar-nav">
+                <th:block sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+                    <form class="navbar-form navbar-left" th:action="@{/issue/add}">
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus"></span> Add issue
+                        </button>
+                    </form>
+                </th:block>
+
+                <th:block sec:authorize="!isAuthenticated()">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Sort by<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{?sort=id}">ID</a></li>
+                            <li><a th:href="@{?sort=summary}">Summary</a></li>
+                            <li><a th:href="@{?sort=user}">Assignee</a></li>
+                            <li><a th:href="@{?sort=type}">Type</a></li>
+                            <li><a th:href="@{?sort=status}">Status</a></li>
+                            <li><a th:href="@{?sort=priority}">Priority</a></li>
+                        </ul>
+                    </li>
+                    <form class="navbar-form navbar-left" th:action="@{/}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="search" placeholder="Search"
+                                   th:value="${search}"/>
+                        </div>
+                        <input type="hidden" name="page" value="1"/>
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </form>
+                </th:block>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <th:block sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Sort by<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{?sort=id}">ID</a></li>
+                            <li><a th:href="@{?sort=summary}">Summary</a></li>
+                            <li><a th:href="@{?sort=user}">Assignee</a></li>
+                            <li><a th:href="@{?sort=type}">Type</a></li>
+                            <li><a th:href="@{?sort=status}">Status</a></li>
+                            <li><a th:href="@{?sort=priority}">Priority</a></li>
+                        </ul>
+                    </li>
+                    <form class="navbar-form navbar-left" th:action="@{/}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="search" placeholder="Search"
+                                   th:value="${search}"/>
+                        </div>
+                        <input type="hidden" name="page" value="1"/>
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </form>
+                </th:block>
+
+                <th:block sec:authorize="!isAuthenticated()">
+                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><a th:href="@{|/editowninfo|}">
+                        <span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                </th:block>
+
+                <th:block sec:authorize="hasAuthority('ADMIN')">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Admin dashboard<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/project/}">All projects</a></li>
+                            <li><a th:href="@{/project/add}">Add new project</a></li>
+                            <li><a th:href="@{/user/}">All Users</a></li>
+                            <li><a th:href="@{/user/add}">Add new user</a></li>
+                            <li><a th:href="@{/status/}">All statuses</a></li>
+                            <li><a th:href="@{/resolution/}">All resolutions</a></li>
+                            <li><a th:href="@{/resolution/add}">Add new resolution</a></li>
+                            <li><a th:href="@{/priority/}">All priorities</a></li>
+                            <li><a th:href="@{/priority/add}">Add new priority</a></li>
+                            <li><a th:href="@{/type/}">All types</a></li>
+                            <li><a th:href="@{/type/add}">Add new type</a></li>
+                        </ul>
+                    </li>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <li><a title="Log out" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                </th:block>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" layout:fragment="content">
+</div>
+</body>
+</html>

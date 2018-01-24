@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Guest issue view</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form th:action="@{/}">
+        <div>
+            <tr>
+                <td><label for="summary">Summary: </label></td>
+                <td class="form-control" th:text="${issue.summary}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="description">Description: </label></td>
+                <td class="form-control" th:text="${issue.description}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="createDate">Create Date: </label></td>
+                <td class="form-control" th:text="${issue.createDate}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="userId">Created By: </label></td>
+                <td class="form-control" th:text="${issue.createdBy}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="modifyDate">Modify Date: </label></td>
+                <td class="form-control" th:text="${issue.modifyDate}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="modifiedBy">Modified By: </label></td>
+                <td class="form-control" th:text="${issue.modifiedBy}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="id">ID of the issue: </label></td>
+                <td class="form-control" th:text="${issue.id}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="status">Status: </label></td>
+                <td class="form-control" th:text="${issue.status.statusName}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="type">Type: </label></td>
+                <td class="form-control" th:text="${issue.type.typeName}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="priority">Priority: </label></td>
+                <td class="form-control" th:text="${issue.priority.priorityName}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="project">Project: </label></td>
+                <td class="form-control" th:text="${issue.project.projectName}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="buildfound">Build found: </label></td>
+                <td class="form-control" th:text="${issue.build.buildNumb}"></td>
+            </tr>
+        </div>
+
+        <div>
+            <tr>
+                <td><label for="assignee">Build found: </label></td>
+                <td class="form-control" th:text="${issue.assignee.firstName} + ' ' + ${issue.assignee.lastName}"></td>
+            </tr>
+        </div>
+        <br>
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span> Back
+            </button>
+        </br>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<th:block th:fragment="main-pagination">
+
+    <!--<nav aria-label="Page navigation">-->
+    <!--<ul class="pagination">-->
+    <!--<li th:if="${page &gt; 1}">-->
+    <!--<a th:href="@{|/?page=${page - 1}|}" aria-label="Previous">-->
+    <!--<span aria-hidden="true">&laquo;</span>-->
+    <!--</a>-->
+    <!--</li>-->
+
+    <!--<li th:if="${page &lt; totalPages}">-->
+    <!--<a th:href="@{|/?page=${page + 1}|}" aria-label="Next">-->
+    <!--<span aria-hidden="true">&raquo;</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</nav>-->
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <!--Previous page-->
+            <li class="page-item" th:classappend="${page &lt;= 1}? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${page - 1}|}">Previous</a>
+            </li>
+            <!--Before Current page-->
+            <li class="page-item" th:if="${page} &gt; 1">
+                <a class="page-link" th:href="@{|?page=1|}" th:text="1"></a>
+            </li>
+            <li class="page-item disabled" th:if="${page-3} &gt; 1">
+                <a class="page-link" href="#" th:text="'...'"></a>
+            </li>
+            <li class="page-item" th:if="${page-2} &gt; 1">
+                <a class="page-link" th:href="@{|?page=${page-2}|}" th:text="${page-2}"></a>
+            </li>
+            <li class="page-item" th:if="${page-1} &gt; 1">
+                <a class="page-link" th:href="@{|?page=${page-1}|}" th:text="${page-1}"></a>
+            </li>
+            <!--current page-->
+            <li class="page-item active">
+                <a class="page-link" th:href="@{|?page=${onePage}|}" th:text="${page}"></a>
+            </li>
+            <!--After Current page-->
+            <li class="page-item" th:if="${page+1} &lt; ${totalPages}">
+                <a class="page-link" th:href="@{|?page=${page+1}|}" th:text="${page+1}"></a>
+            </li>
+            <li class="page-item" th:if="${page+2} &lt; ${totalPages}">
+                <a class="page-link" th:href="@{|?page=${page+2}|}" th:text="${page+2}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${page+3} &lt; ${totalPages}">
+                <a class="page-link" href="#" th:text="'...'"></a>
+            </li>
+            <li class="page-item" th:if="${page} &lt; ${totalPages}">
+                <a class="page-link" th:href="@{|?page=${totalPages}|}" th:text="${totalPages}"></a>
+            </li>
+            <!--Next Page-->
+            <li class="page-item" th:classappend="${page &gt;= totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${page + 1}|}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+</th:block>
+
+</body>
+</html>

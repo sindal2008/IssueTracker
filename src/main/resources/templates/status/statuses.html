@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+>
+<head>
+    <title>Status list</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Status name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="status : ${statuses}">
+            <td><a th:href="@{|/status/edit/${status.id}/|}"
+                   th:text="${status.statusName}"></a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
