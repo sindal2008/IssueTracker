@@ -1,0 +1,4 @@
+A training project that implements a tracker of defects. 
+Using Spring boot and MySQL database.
+
+Before starting the project, you must have a configured connection to the MySQL database and create a schema "issues" in your database. 
