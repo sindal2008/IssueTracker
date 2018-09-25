@@ -1,11 +1,9 @@
 package by.test.sindalouski.issuetracker.entity;
 
-import netscape.security.Privilege;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "role")
